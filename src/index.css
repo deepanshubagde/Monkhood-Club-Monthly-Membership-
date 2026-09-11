@@ -31,3 +31,15 @@
   animation: spinSlow 60s linear infinite;
 }
 
+/* Hide any Netlify injected badges/iframes */
+iframe[src*="netlify"],
+iframe[id*="netlify"],
+[data-netlify-badge],
+div[class*="netlify-badge"],
+#netlify-badge {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
