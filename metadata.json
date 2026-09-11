@@ -1,0 +1,6 @@
+{
+  "name": "Monkhood Club",
+  "description": "Join Monkhood Club - Your Digital Sangha for daily mindfulness, wisdom, live sangha sessions, and personal transformation with a monthly membership.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
