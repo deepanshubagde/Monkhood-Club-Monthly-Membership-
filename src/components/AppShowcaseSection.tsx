@@ -36,6 +36,12 @@ import {
   Trash2,
   Eye,
 } from 'lucide-react';
+import screenshot1 from '../assets/screenshots/1.jpeg';
+import screenshot2 from '../assets/screenshots/2.jpeg';
+import screenshot3 from '../assets/screenshots/3.jpeg';
+import screenshot4 from '../assets/screenshots/4.jpeg';
+import screenshot5 from '../assets/screenshots/5.jpeg';
+import logoSm from '../assets/logo-sm.webp';
 import {
   saveScreenshotToDB,
   loadAllScreenshotsFromDB,
@@ -52,12 +58,13 @@ export function AppShowcaseSection() {
   const [showSlotManager, setShowSlotManager] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [failedImages, setFailedImages] = useState<Record<number, boolean>>({});
   const sliderRef = useRef<HTMLDivElement>(null);
 
   // Exact screenshot paths or user-uploaded images
   const [uploadedImages, setUploadedImages] = useState<Record<number, string>>({});
 
-  // Track if /screenshots/1.jpeg etc exist on disk (pre-initialized since 1.jpeg - 5.jpeg are confirmed)
+  // Track if screenshot images exist
   const [diskImageStatus, setDiskImageStatus] = useState<Record<number, boolean>>({
     0: true,
     1: true,
@@ -66,42 +73,42 @@ export function AppShowcaseSection() {
     4: true,
   });
 
-  // 5 exact screenshot cards from the user's uploaded images
+  // 5 exact screenshot cards bundled directly via Vite
   const slides = [
     {
       id: 'feed',
       title: 'Sangha Community Feed & Live Zoom Sessions',
       subtitle: 'Sunday Live Session (28 likes • 50 comments • 407 views) + Monthly Course Releases',
       tabName: 'Feed',
-      fallbackFile: '/screenshots/1.jpeg',
+      fallbackFile: screenshot1,
     },
     {
       id: 'courses-1',
       title: 'Mindful Transformation & Meditation Vault',
       subtitle: 'Featuring Rahul Dongre & Deepanshu Bagde Masterclasses',
       tabName: 'Courses (Vol. 1)',
-      fallbackFile: '/screenshots/2.jpeg',
+      fallbackFile: screenshot2,
     },
     {
       id: 'courses-2',
       title: 'Sunday Live Vault & Jataka Wisdom',
       subtitle: 'Recorded 10 AM Sessions & Dr. Jasbir Chawala Wisdom Series',
       tabName: 'Courses (Vol. 2)',
-      fallbackFile: '/screenshots/3.jpeg',
+      fallbackFile: screenshot3,
     },
     {
       id: 'courses-3',
       title: 'Psychosomatic Healing & Mindful Mastery',
       subtitle: 'Deepanshu Bagde & Dr. Sujit Bodhi Ancient Healing Series',
       tabName: 'Courses (Vol. 3)',
-      fallbackFile: '/screenshots/4.jpeg',
+      fallbackFile: screenshot4,
     },
     {
       id: 'messages',
       title: 'Real-Time Communities & Live Rooms',
       subtitle: 'Yearly & Monthly Members Sangha with Live Broadcast Alerts',
       tabName: 'Messages',
-      fallbackFile: '/screenshots/5.jpeg',
+      fallbackFile: screenshot5,
     },
   ];
 
@@ -296,7 +303,7 @@ export function AppShowcaseSection() {
           {/* App Header Row */}
           <div className="flex items-start space-x-4 mb-4">
             <div className="w-16 h-16 rounded-2xl bg-white p-2 border border-slate-300 flex items-center justify-center flex-shrink-0 shadow-md">
-              <img src="/logo-sm.webp" alt="Monkhood Club Logo" width={48} height={48} loading="lazy" decoding="async" className="w-full h-full object-contain" />
+              <img src={logoSm} alt="Monkhood Club Logo" width={48} height={48} loading="lazy" decoding="async" className="w-full h-full object-contain" />
             </div>
             <div className="flex-1 min-w-0">
               <h3 className="text-lg font-bold text-slate-100 truncate">Monkhood Club</h3>
@@ -354,7 +361,7 @@ export function AppShowcaseSection() {
           {/* App Header Row */}
           <div className="flex items-start space-x-4 mb-4">
             <div className="w-16 h-16 rounded-2xl bg-white p-2 border border-slate-200 flex items-center justify-center flex-shrink-0 shadow-md">
-              <img src="/logo-sm.webp" alt="Monkhood Club Logo" width={48} height={48} loading="lazy" decoding="async" className="w-full h-full object-contain" />
+              <img src={logoSm} alt="Monkhood Club Logo" width={48} height={48} loading="lazy" decoding="async" className="w-full h-full object-contain" />
             </div>
             <div className="flex-1 min-w-0">
               <h3 className="text-lg font-bold text-white truncate">Monkhood Club</h3>
@@ -508,7 +515,7 @@ export function AppShowcaseSection() {
                 <div className="absolute top-[2px] left-1/2 -translate-x-1/2 w-12 sm:w-14 h-[3px] bg-[#1a1924] rounded-full z-30 pointer-events-none" />
 
                 {/* The Screen Display Surface */}
-                <div className="relative rounded-[41px] sm:rounded-[46px] overflow-hidden bg-black flex flex-col justify-start">
+                <div className="relative rounded-[41px] sm:rounded-[46px] overflow-hidden bg-[#0a0714] min-h-[580px] sm:min-h-[640px] aspect-[9/19.5] flex flex-col justify-start shadow-inner">
                   {/* Dynamic Island (Pill with camera & sensor) */}
                   <div className="absolute top-2.5 left-1/2 -translate-x-1/2 z-30 w-[100px] sm:w-[110px] h-[26px] sm:h-[28px] bg-black rounded-full flex items-center justify-between px-3 shadow-[0_2px_8px_rgba(0,0,0,0.8)] pointer-events-none ring-1 ring-white/[0.08]">
                     {/* Front Camera with optical antireflective lens coating */}
@@ -532,12 +539,15 @@ export function AppShowcaseSection() {
                   )}
 
                   {/* The Actual Screen Content (Exact Image OR Interactive Replica) */}
-                  {activeImageSrc ? (
-                    <div className="w-full bg-black relative flex items-center justify-center">
+                  {activeImageSrc && !failedImages[activeSlide] ? (
+                    <div className="w-full min-h-[580px] sm:min-h-[640px] aspect-[9/19.5] bg-black relative flex items-center justify-center overflow-hidden">
                       <img
                         src={activeImageSrc}
                         alt={slides[activeSlide].title}
-                        className="w-full h-auto block select-none"
+                        onError={() => {
+                          setFailedImages((prev) => ({ ...prev, [activeSlide]: true }));
+                        }}
+                        className="w-full h-full object-cover object-top block select-none"
                       />
                     </div>
                   ) : (
