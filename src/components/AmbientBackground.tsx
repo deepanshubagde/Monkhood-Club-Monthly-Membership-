@@ -66,30 +66,38 @@ export function AmbientBackground() {
     let animId: number;
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
+    let lastWidth = width;
 
     const handleResize = () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+      // Avoid re-allocating canvas on mobile when only URL bar collapses (height change only)
+      if (Math.abs(window.innerWidth - lastWidth) > 30) {
+        lastWidth = window.innerWidth;
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      }
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize, { passive: true });
 
-    const isMobile = width < 640;
-    const particleCount = isMobile ? 22 : 55;
+    const isMobile = window.innerWidth < 640;
+    const particleCount = isMobile ? 14 : 36;
 
     const particles = Array.from({ length: particleCount }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
-      radius: Math.random() * 1.8 + 0.5,
+      radius: Math.random() * 1.5 + 0.5,
       alpha: Math.random() * 0.4 + 0.1,
-      speedY: -(Math.random() * 0.3 + 0.1),
-      speedX: (Math.random() - 0.5) * 0.2,
+      speedY: -(Math.random() * 0.25 + 0.08),
+      speedX: (Math.random() - 0.5) * 0.15,
       pulse: Math.random() * 0.02 + 0.008,
       color: Math.random() > 0.3 ? '#ffd740' : '#f5d77f',
     }));
 
     let frame = 0;
+    let isRunning = true;
+
     const render = () => {
+      if (!isRunning) return;
       ctx.clearRect(0, 0, width, height);
 
       particles.forEach((p) => {
@@ -101,27 +109,36 @@ export function AmbientBackground() {
         if (p.x < -10) p.x = width + 10;
         if (p.x > width + 10) p.x = -10;
 
-        ctx.save();
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fillStyle = p.color;
         ctx.globalAlpha = Math.max(0.1, Math.min(0.5, p.alpha));
-        if (!isMobile) {
-          ctx.shadowColor = '#ffd740';
-          ctx.shadowBlur = 8;
-        }
         ctx.fill();
-        ctx.restore();
       });
 
       frame++;
       animId = requestAnimationFrame(render);
     };
 
+    const handleVisibility = () => {
+      if (document.hidden) {
+        isRunning = false;
+        cancelAnimationFrame(animId);
+      } else {
+        if (!isRunning) {
+          isRunning = true;
+          animId = requestAnimationFrame(render);
+        }
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibility);
     render();
 
     return () => {
+      isRunning = false;
       window.removeEventListener('resize', handleResize);
+      document.removeEventListener('visibilitychange', handleVisibility);
       cancelAnimationFrame(animId);
     };
   }, []);

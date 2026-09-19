@@ -2,15 +2,21 @@
 <html lang="en" class="dark scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="icon" type="image/webp" href="/logo-sm.webp" />
     <link rel="preload" as="image" href="/mondkhud.webp" type="image/webp" fetchpriority="high" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Checkout DNS Prefetch & Preconnect for instant checkout redirect -->
+    <link rel="dns-prefetch" href="https://learn.monkhoodclub.com" />
+    <link rel="preconnect" href="https://learn.monkhoodclub.com" crossorigin />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <title>Monkhood Club</title>
     <meta name="description" content="Join Monkhood Club - Your Digital Sangha for daily mindfulness, wisdom, live sangha sessions, and personal transformation with a monthly membership." />
     <meta property="og:title" content="Monkhood Club" />
     <meta property="og:description" content="Join Monkhood Club - Your Digital Sangha for daily mindfulness, wisdom, live sangha sessions, and personal transformation with a monthly membership." />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
+    
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,6 +25,19 @@
   <body class="bg-[#05040a] text-slate-100 font-['Outfit',sans-serif] selection:bg-amber-500/30 selection:text-amber-200 antialiased overflow-x-hidden">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      (function() {
+        function purgeNetlify() {
+          var badges = document.querySelectorAll('iframe[src*="netlify"], [id*="netlify"], [class*="netlify"], a[href*="netlify.com"]');
+          for (var i = 0; i < badges.length; i++) {
+            badges[i].remove();
+          }
+        }
+        purgeNetlify();
+        window.addEventListener('DOMContentLoaded', purgeNetlify, { passive: true });
+        window.addEventListener('load', purgeNetlify, { passive: true });
+      })();
+    </script>
   </body>
 </html>
 

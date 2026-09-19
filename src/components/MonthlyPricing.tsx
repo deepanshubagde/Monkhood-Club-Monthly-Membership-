@@ -85,9 +85,13 @@ export function MonthlyPricing({
               href={customMonthlyUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full block text-center py-4 px-6 rounded-full font-bold text-xs sm:text-sm tracking-widest uppercase bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-500 hover:brightness-110 text-slate-950 shadow-[0_0_30px_rgba(245,215,127,0.5)] active:scale-[0.97] active:brightness-90 transition-all duration-150 ease-out cursor-pointer select-none"
+              className="relative group overflow-hidden w-full block text-center py-4 px-6 rounded-full font-extrabold text-xs sm:text-sm tracking-widest uppercase bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 hover:brightness-110 text-slate-950 shadow-[0_0_35px_rgba(245,215,127,0.6)] active:scale-[0.97] active:brightness-95 transition-transform duration-100 ease-out cursor-pointer select-none border border-yellow-200"
             >
-              Join Monthly
+              <span className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/50 to-transparent -skew-x-12 animate-shimmer pointer-events-none" />
+              <span className="relative z-10 flex items-center justify-center space-x-2">
+                <Sparkles className="w-4 h-4 text-slate-950 animate-pulse" />
+                <span>Join Monthly • ₹51</span>
+              </span>
             </a>
 
             <div className="flex items-center justify-center space-x-1.5 text-[11px] text-slate-400 mt-3">

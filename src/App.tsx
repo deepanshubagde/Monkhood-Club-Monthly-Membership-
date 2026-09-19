@@ -6,6 +6,8 @@
 import { AmbientBackground } from './components/AmbientBackground';
 import { HeroBanner } from './components/HeroBanner';
 import { MonthlyPricing } from './components/MonthlyPricing';
+import { AccessGuideSection } from './components/AccessGuideSection';
+import { AppShowcaseSection } from './components/AppShowcaseSection';
 import { BenefitsGrid } from './components/BenefitsGrid';
 import { NeedHelpCard } from './components/NeedHelpCard';
 import { Footer } from './components/Footer';
@@ -22,6 +24,12 @@ export default function App() {
 
         {/* Exclusively Monthly Subscription Plan */}
         <MonthlyPricing customMonthlyUrl="https://learn.monkhoodclub.com/web/checkout/6a690eba258d6e22aee85fcf" />
+
+        {/* CRUCIAL PLACEMENT: How to Access Monkhood Club (3-Step Guide) */}
+        <AccessGuideSection />
+
+        {/* CRUCIAL PLACEMENT: App Showcase & Feature Image Carousel */}
+        <AppShowcaseSection />
 
         {/* 8-Badge Key Transformation Features */}
         <BenefitsGrid />

@@ -16,11 +16,11 @@ export function NeedHelpCard() {
             <span className="text-slate-400 font-normal">Call: </span>
             <a
               id="help-call-link"
-              href="tel:+919503129479"
-              className="font-bold text-slate-100 hover:text-amber-300 transition-colors"
+              href="tel:+918080024707"
+              className="font-bold text-slate-100 hover:text-amber-300 transition-colors py-1.5 px-2.5 rounded-lg active:bg-amber-400/15"
             >
               <span className="mr-1.5">+91</span>
-              <span>95031 29479</span>
+              <span>8080024707</span>
             </a>
           </div>
           <div className="inline-flex items-center space-x-2">
@@ -29,7 +29,7 @@ export function NeedHelpCard() {
             <a
               id="help-email-link"
               href="mailto:support@monkhoodclub.com"
-              className="font-bold text-slate-100 hover:text-amber-300 transition-colors"
+              className="font-bold text-slate-100 hover:text-amber-300 transition-colors py-1.5 px-2.5 rounded-lg active:bg-amber-400/15"
             >
               support@monkhoodclub.com
             </a>

@@ -31,12 +31,68 @@
   animation: spinSlow 60s linear infinite;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.35s ease-out forwards;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-150%);
+  }
+  50%, 100% {
+    transform: translateX(150%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 3s infinite ease-in-out;
+}
+
+/* Mobile Touch & Ultra-Fast Interaction Optimization */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+a,
+[role="button"],
+input {
+  touch-action: manipulation;
+}
+
+/* Hardware accelerated animations */
+.animate-shimmer,
+.animate-spin-slow {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Smooth momentum scrolling and font legibility */
+html {
+  -webkit-overflow-scrolling: touch;
+  text-rendering: optimizeLegibility;
+}
+
 /* Hide any Netlify injected badges/iframes */
 iframe[src*="netlify"],
 iframe[id*="netlify"],
 [data-netlify-badge],
 div[class*="netlify-badge"],
-#netlify-badge {
+#netlify-badge,
+netlify-badge,
+div[id*="netlify"],
+.netlify-badge {
   display: none !important;
   visibility: hidden !important;
   opacity: 0 !important;

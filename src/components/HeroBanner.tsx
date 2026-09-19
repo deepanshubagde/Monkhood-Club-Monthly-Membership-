@@ -11,6 +11,8 @@ export function HeroBanner() {
               id="hero-banner-image"
               src="/mondkhud.webp"
               alt="Monkhood Club Digital Sangha Banner"
+              width={1672}
+              height={941}
               loading="eager"
               fetchPriority="high"
               decoding="async"
